@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h3 id="paragraph"></h3>
+      <input id="input" type="text" />
+    </div>
+    <script>
+      const paragraph = document.getElementById("paragraph");
+      const input = document.getElementById("input");
+      const data = {
+        text: "hello world"
+      };
+      const handler = {
+        set(target, prop, value) {
+          if (prop === "text") {
+            target[prop] = value;
+            paragraph.innerHTML = value;
+            input.value = value;
+            return true;
+          } else {
+            return false;
+          }
+        }
+      };
+      const myText = new Proxy(data, handler);
+      input.addEventListener("input", function(e) {
+        myText.text = e.target.value;
+      });
+      myText.text = data.text;
+    </script>
+  </body>
+</html>
